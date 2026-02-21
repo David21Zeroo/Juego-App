@@ -1,0 +1,24 @@
+export type GameMode = 'truth' | 'dare' | null;
+export type GameScreen = 'home' | 'game' | 'result';
+
+export interface Player {
+  id: 1 | 2;
+  name: string;
+  score: number;
+}
+
+export interface Question {
+  id: number;
+  type: 'truth' | 'dare';
+  text: string;
+  level: 'easy' | 'medium' | 'hot';
+}
+
+export interface GameState {
+  screen: GameScreen;
+  players: [Player, Player];
+  currentPlayer: 1 | 2;
+  currentQuestion: Question | null;
+  usedQuestions: number[];
+  round: number;
+}
