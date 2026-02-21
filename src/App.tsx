@@ -1,14 +1,9 @@
 import { useState, useEffect } from 'react';
-import { useSocket } from '@/hooks/useSocket';
-import { OnlineHomeScreen } from '@/sections/OnlineHomeScreen';
-import { WaitingRoom } from '@/sections/WaitingRoom';
-import { OnlineGameScreen } from '@/sections/OnlineGameScreen';
-import { ResultScreen } from '@/sections/ResultScreen';
-import { HomeScreen } from '@/sections/HomeScreen';
-import { GameScreen } from '@/sections/GameScreen';
-import { Toaster } from '@/components/ui/sonner';
-import { toast } from 'sonner';
-import type { Player } from '@/types/game';
+import { useSocket } from './hooks/useSocket'; // Cambiado de '@/hooks/...'
+import { OnlineHomeScreen } from './sections/OnlineHomeScreen'; // Cambiado de '@/sections/...'
+import { WaitingRoom } from './sections/WaitingRoom';
+import { OnlineGameScreen } from './sections/OnlineGameScreen';
+import { ResultScreen } from './sections/ResultScreen';
 
 type AppScreen = 'online-home' | 'waiting' | 'online-game' | 'online-result' | 'local-home' | 'local-game' | 'local-result';
 
