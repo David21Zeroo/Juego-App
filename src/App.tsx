@@ -1,15 +1,10 @@
 import { useState, useEffect } from 'react';
-import { useSocket } from './hooks/useSocket'; // Cambiado de '@/hooks/...'
-import { OnlineHomeScreen } from './sections/OnlineHomeScreen'; // Cambiado de '@/sections/...'
+import { useSocket } from './hooks/useSocket'; 
+import { OnlineHomeScreen } from './sections/OnlineHomeScreen'; 
 import { WaitingRoom } from './sections/WaitingRoom';
 import { OnlineGameScreen } from './sections/OnlineGameScreen';
 import { ResultScreen } from './sections/ResultScreen';
-
-type AppScreen = 'online-home' | 'waiting' | 'online-game' | 'online-result' | 'local-home' | 'local-game' | 'local-result';
-
-// Estado para juego local
-interface LocalGameState {
-  players: [Player, Player];
+import type { Player } from './types/game';
   currentPlayer: 1 | 2;
   currentQuestion: null;
   usedQuestions: number[];
@@ -51,11 +46,10 @@ function App() {
   // Manejar errores
   useEffect(() => {
     if (error) {
-      toast.error(error);
+      console.error(error); // Cambiamos toast.error por un simple console.log
       clearError();
     }
   }, [error, clearError]);
-
   // Detectar cuando el juego comienza
   useEffect(() => {
     if (gameState && screen === 'waiting') {
