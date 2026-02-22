@@ -4,10 +4,16 @@ import { OnlineHomeScreen } from './sections/OnlineHomeScreen';
 import { WaitingRoom } from './sections/WaitingRoom';
 import { OnlineGameScreen } from './sections/OnlineGameScreen';
 import { ResultScreen } from './sections/ResultScreen';
+
+// Definición directa para evitar errores de carpetas inexistentes
+export interface Player {
+  id: string;
+  name: string;
+  score: number;
+}
+
 type AppScreen = 'online-home' | 'waiting' | 'online-game' | 'online-results';
 
-function App() {
-  const [screen, setScreen] = useState<AppScreen>('online-home');
   
   const {
     roomCode,
