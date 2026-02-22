@@ -5,7 +5,6 @@ import { WaitingRoom } from './sections/WaitingRoom';
 import { OnlineGameScreen } from './sections/OnlineGameScreen';
 import { ResultScreen } from './sections/ResultScreen';
 
-// Definición directa para evitar errores de carpetas inexistentes
 export interface Player {
   id: string;
   name: string;
@@ -14,7 +13,8 @@ export interface Player {
 
 type AppScreen = 'online-home' | 'waiting' | 'online-game' | 'online-results';
 
-  
+function App() {
+
   const {
     roomCode,
     players,
