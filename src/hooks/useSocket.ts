@@ -1,8 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { io, Socket } from 'socket.io-client';
 
-const SERVER_URL = 'TU_URL_RENDER_AQUI'; // 🔥 CAMBIA ESTO
-
+const SERVER_URL = 'https://juego-backend-u4wp.onrender.com';
 export const useSocket = () => {
   const socketRef = useRef<Socket | null>(null);
 
