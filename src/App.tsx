@@ -14,7 +14,7 @@ export interface Player {
 type AppScreen = 'online-home' | 'waiting' | 'online-game' | 'online-results';
 
 function App() {
-
+  const [screen, setScreen] = useState<AppScreen>('online-home');
 
   const {
     roomCode,
@@ -29,7 +29,6 @@ function App() {
     clearError
   } = useSocket();
 
-  // Manejo de errores simple por consola
   useEffect(() => {
     if (error) {
       console.error("Error de conexión:", error);
@@ -37,7 +36,6 @@ function App() {
     }
   }, [error, clearError]);
 
-  // Cambiar de pantalla según el estado del juego
   useEffect(() => {
     if (gameState && screen === 'waiting') {
       setScreen('online-game');
@@ -54,39 +52,36 @@ function App() {
 
       {screen === 'online-home' && (
         <OnlineHomeScreen 
-          onCreateRoom={(name) => {
-            createRoom(name);
+          onCreateRoom={createRoom} 
+          onJoinRoom={(code: string, name: string) => {
+            joinRoom(code, name);
             setScreen('waiting');
-          }}
-          onJoinRoom={(name, code) => {
-            joinRoom(name, code);
-            setScreen('waiting');
-          }}
+          }} 
         />
       )}
 
       {screen === 'waiting' && (
         <WaitingRoom 
-          roomCode={roomCode || ''} 
+          roomCode={roomCode} 
           players={players} 
         />
       )}
 
       {screen === 'online-game' && gameState && (
-        <OnlineGameScreen
-          gameState={gameState}
-          players={players}
-          onComplete={completeChallenge}
+        <OnlineGameScreen 
+          gameState={gameState} 
+          players={players} 
+          onComplete={completeChallenge} 
         />
       )}
 
       {screen === 'online-results' && (
         <ResultScreen 
           players={players} 
-          onRestart={() => {
+          onReset={() => {
             resetGame();
             setScreen('online-home');
-          }}
+          }} 
         />
       )}
     </div>
