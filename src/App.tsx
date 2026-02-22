@@ -4,8 +4,6 @@ import { OnlineHomeScreen } from './sections/OnlineHomeScreen';
 import { WaitingRoom } from './sections/WaitingRoom';
 import { OnlineGameScreen } from './sections/OnlineGameScreen';
 import { ResultScreen } from './sections/ResultScreen';
-import type { Player } from './types/game';
-
 type AppScreen = 'online-home' | 'waiting' | 'online-game' | 'online-results';
 
 function App() {
