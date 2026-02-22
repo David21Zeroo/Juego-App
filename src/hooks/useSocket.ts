@@ -1,50 +1,51 @@
 import { useEffect, useRef, useState } from 'react';
 import { io, Socket } from 'socket.io-client';
 
-const SERVER_URL = 'https://juego-kaei.onrender.com';
+const SERVER_URL = 'TU_URL_RENDER_AQUI'; // 🔥 CAMBIA ESTO
 
 export const useSocket = () => {
   const socketRef = useRef<Socket | null>(null);
+
   const [isConnected, setIsConnected] = useState(false);
   const [roomCode, setRoomCode] = useState<string | null>(null);
-  const [players, setPlayers] = useState([]);
-  const [gameState, setGameState] = useState(null);
+  const [players, setPlayers] = useState<any[]>([]);
+  const [gameState, setGameState] = useState<any>(null);
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const socket = io(SERVER_URL, {
-      transports: ['websocket', 'polling'],
+      transports: ["websocket", "polling"],
       reconnection: true,
-      reconnectionAttempts: 5,
+      timeout: 20000
     });
 
     socketRef.current = socket;
 
-    socket.on('connect', () => {
-      console.log('¡Conectado a Render!');
+    socket.on("connect", () => {
+      console.log("✅ Conectado al servidor");
       setIsConnected(true);
+      setError(null);
     });
 
-    socket.on('disconnect', () => {
+    socket.on("disconnect", () => {
       setIsConnected(false);
     });
 
-    // Escuchar eventos del juego
-    socket.on('room_created', (data) => {
+    socket.on("room_created", (data) => {
       setRoomCode(data.roomCode);
       setPlayers(data.players);
     });
 
-    socket.on('room_joined', (data) => {
+    socket.on("room_joined", (data) => {
       setRoomCode(data.roomCode);
       setPlayers(data.players);
     });
 
-    socket.on('game_update', (state) => {
+    socket.on("game_update", (state) => {
       setGameState(state);
     });
 
-    socket.on('error', (msg) => {
+    socket.on("error", (msg) => {
       setError(msg);
     });
 
@@ -53,35 +54,39 @@ export const useSocket = () => {
     };
   }, []);
 
-  // Funciones que App.tsx necesita:
+  // 📌 Crear sala
   const createRoom = (playerName: string) => {
-    socketRef.current?.emit('create_room', { playerName });
+    socketRef.current?.emit("create_room", { playerName });
   };
 
-  const joinRoom = (playerName: string, roomCode: string) => {
-    socketRef.current?.emit('join_room', { playerName, roomCode });
+  // 📌 Unirse a sala (orden corregido)
+  const joinRoom = (roomCode: string, playerName: string) => {
+    socketRef.current?.emit("join_room", {
+      roomCode,
+      playerName
+    });
   };
 
   const completeChallenge = (data: any) => {
-    socketRef.current?.emit('complete_challenge', data);
+    socketRef.current?.emit("complete_challenge", data);
   };
 
   const resetGame = () => {
-    socketRef.current?.emit('reset_game', { roomCode });
+    socketRef.current?.emit("reset_game", { roomCode });
   };
 
   const clearError = () => setError(null);
 
-  return { 
-    isConnected, 
-    roomCode, 
-    players, 
-    gameState, 
-    error, 
-    createRoom, 
-    joinRoom, 
-    completeChallenge, 
-    resetGame, 
-    clearError 
+  return {
+    isConnected,
+    roomCode,
+    players,
+    gameState,
+    error,
+    createRoom,
+    joinRoom,
+    completeChallenge,
+    resetGame,
+    clearError
   };
 };
