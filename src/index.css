@@ -69,7 +69,33 @@
   * {
     @apply border-border;
   }
-  body {
-    @apply bg-background text-foreground;
-  }
+/* ======= 🎮 GAMER UI PRO ======= */
+
+body {
+  font-family: system-ui, sans-serif;
+}
+
+/* Contenedor gamer */
+.gamer-card {
+  backdrop-filter: blur(20px);
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 24px;
+  box-shadow: 0 0 40px rgba(0,0,0,0.5);
+}
+
+/* Botón gamer neon */
+.gamer-button {
+  background: linear-gradient(45deg,#ff3cac,#784ba0,#2b86c5);
+  color: white;
+  font-weight: bold;
+  border-radius: 14px;
+  padding: 14px;
+  transition: 0.3s;
+  border: none;
+}
+
+.gamer-button:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 20px rgba(255,60,172,0.5);
 }
