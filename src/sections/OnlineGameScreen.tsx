@@ -62,50 +62,13 @@ export const OnlineGameScreen = ({ gameState, players, onComplete }: any) => {
   };
 
   return (
-    <div className="p-6 text-center bg-white rounded-xl shadow-lg">
-      <h2 className="text-2xl font-bold mb-4 text-purple-600">Tu Turno</h2>
-      
-      {!seleccion ? (
-        <div className="space-y-4">
-          <p className="text-gray-600 mb-4">¿Qué eliges para este turno?</p>
-          <button 
-            onClick={() => manejarEleccion('verdad')}
-            className="w-full bg-blue-500 text-white py-4 rounded-lg font-bold text-xl hover:bg-blue-600 transition"
-          >
-            🤔 VERDAD
-          </button>
-          <button 
-            onClick={() => manejarEleccion('reto')}
-            className="w-full bg-red-500 text-white py-4 rounded-lg font-bold text-xl hover:bg-red-600 transition"
-          >
-            🔥 RETO
-          </button>
-        </div>
-      ) : (
-        <div className="animate-fade-in">
-          <div className="bg-yellow-50 p-6 rounded-lg border-2 border-yellow-200 mb-6">
-            <p className="text-xl font-medium text-gray-800">{seleccion}</p>
-          </div>
-          <button 
-            onClick={finalizarTurno}
-            className="w-full bg-green-500 text-white py-3 rounded-lg font-bold hover:bg-green-600"
-          >
-            ¡Hecho! Siguiente
-          </button>
-        </div>
-      )}
+  <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-black via-purple-950 to-pink-900 p-6">
 
-      <div className="mt-8 text-left border-t pt-4">
-        <h3 className="text-sm font-bold text-gray-400 uppercase">Puntuaciones</h3>
-        {players.map((p: any) => (
-          <div key={p.id} className="flex justify-between items-center py-1">
-            <span className="text-gray-700">{p.name}</span>
-            <span className="bg-purple-100 text-purple-700 px-2 py-1 rounded text-xs font-bold">
-              {p.score} pts
-            </span>
-          </div>
-        ))}
-      </div>
+    <div className="gamer-card w-full max-w-md p-8">
+
+      {/* ⭐ Aquí va el contenido de tu pantalla */}
+
     </div>
-  );
-};
+
+  </div>
+);
