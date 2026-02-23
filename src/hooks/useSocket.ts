@@ -1,7 +1,8 @@
-import { useEffect, useRef, useState } from 'react';
-import { io, Socket } from 'socket.io-client';
+import { useEffect, useRef, useState } from "react";
+import { io, Socket } from "socket.io-client";
 
 const SERVER_URL = "https://verdad-reto-backend.onrender.com";
+
 export const useSocket = () => {
   const socketRef = useRef<Socket | null>(null);
 
@@ -13,38 +14,33 @@ export const useSocket = () => {
 
   useEffect(() => {
     const socket = io(SERVER_URL, {
-      transports: ["websocket", "polling"],
-      reconnection: true,
-      timeout: 20000
+      transports: ["websocket"],
+      reconnection: true
     });
 
     socketRef.current = socket;
 
     socket.on("connect", () => {
-      console.log("✅ Conectado al servidor");
+      console.log("✅ Socket conectado");
       setIsConnected(true);
-      setError(null);
-    });
-
-    socket.on("disconnect", () => {
-      setIsConnected(false);
     });
 
     socket.on("room_created", (data) => {
+      console.log("✅ Sala creada", data);
+
       setRoomCode(data.roomCode);
       setPlayers(data.players);
     });
 
     socket.on("room_joined", (data) => {
+      console.log("✅ Sala unida", data);
+
       setRoomCode(data.roomCode);
       setPlayers(data.players);
     });
 
-    socket.on("game_update", (state) => {
-      setGameState(state);
-    });
-
     socket.on("error", (msg) => {
+      console.log("❌ Error socket", msg);
       setError(msg);
     });
 
@@ -53,17 +49,10 @@ export const useSocket = () => {
     };
   }, []);
 
-  // 📌 Crear sala
   const createRoom = (playerName: string) => {
-  console.log("🔥 Intentando crear sala", playerName);
-
-  socketRef.current?.emit("create_room", {
-    playerName
-  });
-};
+    socketRef.current?.emit("create_room", { playerName });
   };
 
-  // 📌 Unirse a sala (orden corregido)
   const joinRoom = (roomCode: string, playerName: string) => {
     socketRef.current?.emit("join_room", {
       roomCode,
@@ -72,11 +61,11 @@ export const useSocket = () => {
   };
 
   const completeChallenge = (data: any) => {
-    socketRef.current?.emit("complete_challenge", data);
+    socketRef.current?.emit("complete_turn", data);
   };
 
   const resetGame = () => {
-    socketRef.current?.emit("reset_game", { roomCode });
+    socketRef.current?.emit("reset_game");
   };
 
   const clearError = () => setError(null);
