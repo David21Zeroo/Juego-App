@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import { io, Socket } from 'socket.io-client';
 
-const SERVER_URL = 'https://juego-backend-u4wp.onrender.com';
+const SERVER_URL = "https://verdad-reto-backend.onrender.com";
 export const useSocket = () => {
   const socketRef = useRef<Socket | null>(null);
 
