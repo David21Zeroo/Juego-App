@@ -55,7 +55,12 @@ export const useSocket = () => {
 
   // 📌 Crear sala
   const createRoom = (playerName: string) => {
-    socketRef.current?.emit("create_room", { playerName });
+  console.log("🔥 Intentando crear sala", playerName);
+
+  socketRef.current?.emit("create_room", {
+    playerName
+  });
+};
   };
 
   // 📌 Unirse a sala (orden corregido)
